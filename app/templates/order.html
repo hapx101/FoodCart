@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename = 'images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename = 'images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename = 'images/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename = 'images/site.webmanifest') }}"> 
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        a img {
+            float: left;
+            padding-right: 10px;
+        }
+
+        li {
+            float: right;
+        }
+        li p {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 7px 20px;
+            text-decoration: none;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 24px 18px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        div.heading {
+            float: center;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        div.item {
+            float: center;
+            border-style: solid;
+            border: 2px black;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 5px;
+        }
+
+        h1 {
+            text-align: left;
+        }
+
+        h2 {
+            text-align: left;
+            float: center;
+            text-size-adjust: auto;
+        }
+
+        input[type=submit] {
+            width: 50%;
+            background-color: #333;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type=submit]:hover {
+            background-color: #111;
+            float: right;
+        }
+
+    </style>
+    <title>FoodSetGo | Orders</title>
+</head>
+<body>
+    <ul>
+        <a href="/"><img id="home" src="{{ url_for('static', filename = 'images/logo-72x72.png') }}"></a>
+        <li><a href="/logout">LogOut</a></li>
+        <li><a href="/orders">Orders</a></li>
+        <li><a href="/cart">Cart({{cart}})</a></li>
+    </ul>
+
+    <div class="heading">
+        <table style="width: 100%;align=justify;">
+            <tr>
+                <td width=50%>
+                    <h1>{{ fname }}'s Orders</h1>
+                </td>
+                <td width=50%>
+                    <form action="/" method="GET">
+                        <input type="submit" style="width: 100%;" value="Continue Shopping">
+                    </form>
+                </td>
+            </tr>
+        </table> 
+    </div>
+    <div class="food">
+        {% for item in items %}
+            <div class="item">
+                <table>
+                    <tr>
+                <td width=200px>
+                    <img class="item" alt="{{ item[1] }}" width="150px" src="/static/images/{{ item[0] }}.png">
+                </td>
+                <td width=700px>
+                    <h2>{{ item[1] }}</h2>
+                    <p>{{ item[2] }}</p>
+                </td>
+                <td width=150px>
+                    <p>Price: &euro; {{ item[3] }}/serving</p>
+                </td>
+                <td width=100px>
+                    <p>Quantity: {{ item[4] }}</p>
+                </td>
+                <input type="hidden" id="orderId" name="orderId" value="{{ item[5] }}">
+                </tr>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,10 +1,8 @@
 FROM ubuntu:latest
 
-RUN apt-get update -y && \
-    apt-get install -y python3-pip python3-dev && \
-    apt-get install -y curl
+RUN apt-get update -y
 
-# We copy just the requirements.txt first to leverage Docker cache
+RUN apt-get install -y python3-pip python3-dev
 
 COPY ./requirements.txt /app/requirements.txt
 
@@ -14,6 +12,8 @@ RUN pip3 install -r requirements.txt
 
 COPY app/ .
 
-ENTRYPOINT [ "python3" ]
+RUN SECRET=`python3 -c 'import secrets; print(secrets.token_hex(32))'`
 
-CMD [ "app.py" ]
+RUN python3 dbinit.py
+
+ENTRYPOINT [ "flask", "run", "-p", "8080" ]

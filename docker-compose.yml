@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    environment:
+      FLASK_APP: 'app'
+      FLASK_ENV: 'production'
+    container_name: web
+    network_mode: "host"

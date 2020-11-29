@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename = 'images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename = 'images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename = 'images/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename = 'images/site.webmanifest') }}"> 
+    <style>
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        a img {
+            float: left;
+            padding-right: 10px;
+        }
+
+        li {
+            float: right;
+        }
+        li p {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 7px 20px;
+            text-decoration: none;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 24px 18px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        div.heading {
+            float: center;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        div.item {
+            float: center;
+            border-style: solid;
+            border: 2px black;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 5px;
+        }
+
+        h1 {
+            text-align: left;
+        }
+
+        h2 {
+            text-align: left;
+            float: center;
+            text-size-adjust: auto;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        input[type=submit]:hover {
+            background-color: #111;
+            float: right;
+        }
+
+    </style>
+    <title>FoodSetGo | Home</title>
+</head>
+<body>
+    <ul>
+        <a href="/"><img id="home" src="{{ url_for('static', filename = 'images/logo-72x72.png') }}"></a>
+        {% if not loggedIn %}
+        <li><a href="/login">LogIn</a></li>
+        {% else %}
+        <li><a href="/logout">LogOut</a></li>
+        <li><a href="/orders">Orders</a></li>
+        <li><a href="/cart">Cart({{cart}})</a></li>
+        {% endif %}
+    </ul>
+
+    <div class="heading">
+        {% if not loggedIn %}
+        <h1>Welcome to FoodSetGo. What do you want to eat?</h1>
+        {% else %}
+        <h1>Hi {{ fname }}, what do you want to eat?</h1>
+        {% endif %}
+    </div>
+    <div class="food">
+    {% for item in items %}
+        <div class="item">
+            <table>
+                <tr>
+            <td width=200px>
+                <img class="item" alt="{{ item[1] }}" width="150px" src="/static/images/{{ item[0] }}.png">
+            </td>
+            <td width=700px>
+                <h2>{{ item[1] }}</h2>
+                <p>{{ item[4] }}</p>
+            </td>
+            <td width=150px>
+                <p>Price: &euro; {{ item[3] }}/serving</p>
+            </td>
+            <form action="/addToCart" method="POST">
+                <input type="hidden" id="productId" name="productId" value="{{ item[0] }}">
+                <input type="hidden" id="price" name="price" value="{{ item[3] }}">
+                <td width=100px>
+                <input type="number" min=0 max=5 style="width: 5em" id="Quantity" name="Quantity" value="1">
+                </td>
+                <td>
+                <input type="submit" value="Add To Cart">
+                </td>
+            </form>
+            </tr>
+            </table>
+        </div>
+    {% endfor %}
+    </div>
+
+</body>
+</html>

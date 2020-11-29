@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename = 'images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename = 'images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename = 'images/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename = 'images/site.webmanifest') }}">
+    <style>
+        p {
+            text-align: center;
+            color: red;
+        }
+
+        a img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 63 px;
+            padding-bottom: 3px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #111;
+        }
+
+        div {
+            float: center;
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+    </style>
+    <title>FoodSetGo | Login</title>
+</head>
+<body>
+    <div>
+        <a href="/"><img id="home" src="{{ url_for('static', filename = 'images/logo-72x72.png') }}"></a>
+        <h1>Login to FoodSetGo</h1>
+        <p> {{error}} </p>
+        <form action="/loginFormSubmit" method="POST">
+            <label for="fname">Username</label>
+            <input type="text" id="fname" name="email" placeholder="user@email.com">
+            <br>
+            <label for="lname">Password</label>
+            <input type="password" id="lname" name="password" placeholder="Password">   
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+</html>
