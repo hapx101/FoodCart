@@ -120,6 +120,15 @@ def checkoutCommit(orderid):
     con.close()
     return 201
 
+def removeFromCartCommit(orderid):
+    con = sqlite3.connect(DATABASE)
+    con.set_trace_callback(logger.debug)
+    cur = con.cursor()
+    cur.execute("UPDATE CART SET STATUS='removed' WHERE orderid=" + str(orderid) + "")
+    con.commit()
+    con.close()
+    return 201
+
 @app.route("/")
 def root():
     items = getItems()
@@ -163,6 +172,7 @@ def orders():
         items= getOrder(session['email'], status='open')
         cart_len = len(items)
         orders= getOrder(session['email'], status='ordered')
+        orders.reverse()
         return render_template('order.html', fname=fname, cart=cart_len, items=orders)
     else:
         return redirect(url_for('root'))
@@ -191,6 +201,17 @@ def addToCartSubmit():
     orderid = int(len(getOrderId()) + 1)
     if 'email' in session:
         addToCart(orderid, productid, quantity, session['email'], bill)
+        return redirect(url_for('cart'))
+    else:
+        return redirect(url_for('loginForm'))
+
+@app.route("/removeToCart", methods = ['GET'])
+def removeFromCartSubmit():
+    logger.debug('Request submitted: ' + str(request.args.get))
+    orderid = request.args.get('orderId')
+    logger.debug('OrderId: ' + str(orderid))
+    if 'email' in session:
+        removeFromCartCommit(orderid)
         return redirect(url_for('cart'))
     else:
         return redirect(url_for('loginForm'))

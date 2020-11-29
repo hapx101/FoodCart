@@ -87,6 +87,23 @@
             float: right;
         }
 
+        button[type=button] {
+            width: 50%;
+            background-color: #333;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        button[type=button]:hover {
+            background-color: #111;
+            float: right;
+        }
+
     </style>
     <title>FoodSetGo | Cart</title>
 </head>
@@ -99,7 +116,7 @@
     </ul>
 
     <div class="heading">
-        <table style="width: 100%;align=justify;">
+        <table style="width: 100%; text-align: justify;">
             <tr>
                 <td width=50%>
                     <h1>{{ fname }}'s Cart</h1>
@@ -130,6 +147,9 @@
                             </td>
                             <td width=100px>
                                 <p>Quantity: {{ item[4] }}</p>
+                            </td>
+                            <td>
+                                <a href='/removeToCart?orderId={{ item[5] }}'><button type="button" style="width: 100%;">Remove from Cart</button></a>
                             </td>
                             <input type="hidden" id="orderId" name="orderId{{ loop.index0 }}" value="{{ item[5] }}">
                         </tr>
